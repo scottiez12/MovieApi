@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "UZPGc34oLZnggG2Vp+2vpT3nljYA9v7FdNT3sQMrTcLkrYjIup0qTQHDEsAuDth2EgNfQbpoeCXrYxuDogct7A==",
+  "success": true,
+  "projectFilePath": "D:\\Workspace\\Users\\sziegler\\Projects for Learning\\DNCwithReact\\MovieApi\\MovieApi\\MovieApi\\MovieApi.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\sziegler\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
+    "C:\\Users\\sziegler\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\sziegler\\.nuget\\packages\\swashbuckle.aspnetcore\\5.6.3\\swashbuckle.aspnetcore.5.6.3.nupkg.sha512",
+    "C:\\Users\\sziegler\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\5.6.3\\swashbuckle.aspnetcore.swagger.5.6.3.nupkg.sha512",
+    "C:\\Users\\sziegler\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\5.6.3\\swashbuckle.aspnetcore.swaggergen.5.6.3.nupkg.sha512",
+    "C:\\Users\\sziegler\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\5.6.3\\swashbuckle.aspnetcore.swaggerui.5.6.3.nupkg.sha512"
+  ],
+  "logs": []
+}
