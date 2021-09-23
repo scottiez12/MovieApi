@@ -1,6 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using MovieApi.Entities;
+using MovieApi.Filters;
 using MovieApi.Services;
 using System;
 using System.Collections.Generic;
@@ -13,46 +18,51 @@ namespace MovieApi.Controllers
     [ApiController]
     public class GenresController : ControllerBase
     {
-        private readonly IRepository _repository;
+        private readonly ILogger _logger;
+        private readonly ApplicationDbContext _context;
 
-        public GenresController(IRepository repository)
+        public GenresController(ILogger<GenresController> logger, ApplicationDbContext context)
         {
-            _repository = repository;
+            _logger = logger;
+            _context = context;
         }
 
         [HttpGet]
+        //[ResponseCache(Duration = 60)]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        //[ServiceFilter(typeof(MyActionFilter))]
         public async Task<ActionResult<List<Genre>>> Get()
         {
-             return await _repository.GetAllGenres();
+            _logger.LogInformation("Getting all genres");
+
+
+            return await _context.Genres.ToListAsync();
         }
 
         [HttpGet("{Id:int}")]
-        public IActionResult Get(int Id, [FromHeader]string param2)
+        public IActionResult Get(int Id2)
         {
-            var genre = _repository.GetGenreById(Id);
-            if (genre == null)
-            {
-                return NotFound();
-            }
-            return Ok(genre);
+            throw new NotImplementedException();
         }
 
         [HttpPost]
-        public ActionResult Post([FromBody]Genre genre)
+        public async Task<ActionResult> Post([FromBody] Genre genre)
         {
+            _context.Genres.Add(genre);
+            await _context.SaveChangesAsync();
             return NoContent();
         }
 
         [HttpPut]
         public ActionResult Put([FromBody] Genre genre)
         {
-            return NoContent();
+            throw new NotImplementedException();
         }
 
         [HttpDelete]
         public ActionResult Delete()
         {
-            return NoContent();
+            throw new NotImplementedException();
         }
     }
 }
