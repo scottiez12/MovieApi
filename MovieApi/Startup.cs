@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using MovieApi.APIBehavior;
 using MovieApi.Filters;
 using MovieApi.Services;
 using System;
@@ -41,8 +42,12 @@ namespace MovieApi
             services.AddControllers(options =>
             {
                 options.Filters.Add(typeof(MyGlobalExceptionFilter));
-            });
-            services.AddResponseCaching();
+                options.Filters.Add(typeof(ParseBadRequest));
+            }).ConfigureApiBehaviorOptions(BadRequestBehavior.Parse);
+
+            services.AddAutoMapper(typeof(Startup));
+
+            //services.AddResponseCaching();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer();
             //services.AddSingleton<IRepository, InMemoryRepository>();
             //services.AddTransient<MyActionFilter>();
@@ -58,9 +63,11 @@ namespace MovieApi
                 {
                     builder.WithOrigins(frontendURL)
                     .AllowAnyMethod()
-                    .AllowAnyHeader();
+                    .AllowAnyHeader()
+                    .WithExposedHeaders(new string[] { "totalAmountOfRecords" });
                 });
             });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -109,7 +116,6 @@ namespace MovieApi
 
             app.UseAuthentication();
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
