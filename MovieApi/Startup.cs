@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using MovieApi.APIBehavior;
 using MovieApi.Filters;
+using MovieApi.Helpers;
 using MovieApi.Services;
 using System;
 using System.Collections.Generic;
@@ -46,6 +47,11 @@ namespace MovieApi
             }).ConfigureApiBehaviorOptions(BadRequestBehavior.Parse);
 
             services.AddAutoMapper(typeof(Startup));
+
+
+            services.AddScoped<IFileStorageService, AzureStorageService>();
+            //services.AddScoped<IFileStorageService, InAppStorageService>();
+            services.AddHttpContextAccessor();
 
             //services.AddResponseCaching();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer();
@@ -109,6 +115,8 @@ namespace MovieApi
             }
 
             app.UseHttpsRedirection();
+
+            app.UseStaticFiles();
 
             app.UseRouting();
             app.UseCors();

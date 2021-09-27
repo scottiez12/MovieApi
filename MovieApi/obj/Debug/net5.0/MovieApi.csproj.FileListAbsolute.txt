@@ -61,3 +61,8 @@ D:\Workspace\Users\sziegler\Projects for Learning\DNCwithReact\MovieApi\MovieApi
 D:\Workspace\Users\sziegler\Projects for Learning\DNCwithReact\MovieApi\MovieApi\MovieApi\obj\Debug\net5.0\ref\MovieApi.dll
 D:\Workspace\Users\sziegler\Projects for Learning\DNCwithReact\MovieApi\MovieApi\MovieApi\obj\Debug\net5.0\MovieApi.pdb
 D:\Workspace\Users\sziegler\Projects for Learning\DNCwithReact\MovieApi\MovieApi\MovieApi\obj\Debug\net5.0\MovieApi.genruntimeconfig.cache
+D:\Workspace\Users\sziegler\Projects for Learning\DNCwithReact\MovieApi\MovieApi\MovieApi\bin\Debug\net5.0\Azure.Core.dll
+D:\Workspace\Users\sziegler\Projects for Learning\DNCwithReact\MovieApi\MovieApi\MovieApi\bin\Debug\net5.0\Azure.Storage.Blobs.dll
+D:\Workspace\Users\sziegler\Projects for Learning\DNCwithReact\MovieApi\MovieApi\MovieApi\bin\Debug\net5.0\Azure.Storage.Common.dll
+D:\Workspace\Users\sziegler\Projects for Learning\DNCwithReact\MovieApi\MovieApi\MovieApi\bin\Debug\net5.0\Microsoft.Bcl.AsyncInterfaces.dll
+D:\Workspace\Users\sziegler\Projects for Learning\DNCwithReact\MovieApi\MovieApi\MovieApi\bin\Debug\net5.0\System.Memory.Data.dll

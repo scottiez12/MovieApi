@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MovieApi.DTOs;
+using MovieApi.Entities;
+using MovieApi.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,18 +17,24 @@ namespace MovieApi.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
+        private readonly IFileStorageService _fileStorageService;
+        private readonly string containerName = "actors";
 
-        public ActorsController(ApplicationDbContext _context, IMapper _mapper)
+        public ActorsController(ApplicationDbContext _context, IMapper _mapper, IFileStorageService _fileStorageService)
         {
             this._context = _context;
             this._mapper = _mapper;
+            this._fileStorageService = _fileStorageService;
         }
 
 
         [HttpGet]
-        public async Task<ActionResult<List<ActorDTO>>> Get()
+        public async Task<ActionResult<List<ActorDTO>>> Get([FromQuery] PaginationDTO paginationDTO)
         {
-            var actors = await _context.Actors.ToListAsync();
+            var queryable = _context.Actors.AsQueryable();
+            await HttpContext.InsertParametersPaginationInHeader(queryable);
+            var actors = await queryable.OrderBy(x => x.Name).Paginate(paginationDTO).ToListAsync();
+            
             return _mapper.Map<List<ActorDTO>>(actors);
         }
 
@@ -46,15 +54,39 @@ namespace MovieApi.Controllers
         [HttpPost]
         public async Task<ActionResult> Post([FromForm] ActorCreationDTO actorCreationDTO)
         {
-            return NoContent();
-            throw new NotImplementedException();
+            var actor = _mapper.Map<Actor>(actorCreationDTO);
+
+            if (actorCreationDTO.Picture != null)
+            {
+                actor.Picture = await _fileStorageService.SaveFile(containerName, actorCreationDTO.Picture);
+
+            }
+                _context.Add(actor);
+                await _context.SaveChangesAsync();
+                return NoContent();
+
         }
 
 
-        [HttpPut]
-        public async Task<ActionResult> Put([FromForm] ActorCreationDTO actorCreationDTO)
+        [HttpPut("{id:int}")]
+        public async Task<ActionResult> Put(int Id, [FromForm] ActorCreationDTO actorCreationDTO)
         {
-            throw new NotImplementedException();
+            var actor = await _context.Actors.FirstOrDefaultAsync(x => x.Id == Id);
+
+            if (actor == null)
+            {
+                return NotFound();
+            }
+
+            actor = _mapper.Map(actorCreationDTO, actor);
+
+            if (actorCreationDTO.Picture != null)
+            {
+                actor.Picture = await _fileStorageService.EditFile(containerName, actorCreationDTO.Picture, actor.Picture);
+            }
+
+            await _context.SaveChangesAsync();
+            return NoContent();
         }
 
         [HttpDelete("{id:int}")]
@@ -68,6 +100,7 @@ namespace MovieApi.Controllers
 
             _context.Remove(actor);
             await _context.SaveChangesAsync();
+            await _fileStorageService.DeleteFile(actor.Picture, containerName);
 
             return NoContent();
         }
