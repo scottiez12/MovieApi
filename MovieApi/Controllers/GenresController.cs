@@ -49,9 +49,16 @@ namespace MovieApi.Controllers
         }
 
         [HttpGet("{Id:int}")]
-        public IActionResult Get(int Id2)
+        public async Task<ActionResult<GenreDTO>> Get(int Id)
         {
-            throw new NotImplementedException();
+            var genre = await _context.Genres.FirstOrDefaultAsync(x => x.Id == Id);
+
+            if (genre == null)
+            {
+                return NotFound();
+            }
+
+            return _mapper.Map<GenreDTO>(genre);
         }
 
         [HttpPost]
@@ -63,16 +70,32 @@ namespace MovieApi.Controllers
             return NoContent();
         }
 
-        [HttpPut]
-        public ActionResult Put([FromBody] Genre genre)
+        [HttpPut("{id:int}")]
+        public async Task<ActionResult> Put(int Id ,[FromBody] GenreCreationDTO genreCreationDTO)
         {
-            throw new NotImplementedException();
+            var genre = await _context.Genres.FirstOrDefaultAsync(x => x.Id == Id);
+            if (genre == null)
+            {
+                return NotFound();
+            }
+            genre = _mapper.Map(genreCreationDTO, genre);
+            await _context.SaveChangesAsync();
+            return NoContent();
         }
 
-        [HttpDelete]
-        public ActionResult Delete()
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult> Delete(int id)
         {
-            throw new NotImplementedException();
+            var exists = await _context.Genres.AnyAsync(x => x.Id == id);
+            if (!exists)
+            {
+                return NotFound();
+            }
+
+            _context.Remove(new Genre() { Id = id });
+            await _context.SaveChangesAsync();
+            return NoContent();
+
         }
     }
 }
