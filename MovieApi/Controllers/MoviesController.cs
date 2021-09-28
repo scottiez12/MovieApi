@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MovieApi.DTOs;
 using MovieApi.Entities;
 using MovieApi.Helpers;
@@ -31,7 +32,7 @@ namespace MovieApi.Controllers
         {
             var movie = _mapper.Map<Movie>(movieCreationDTO);
 
-            if (movie.Poster != null)
+            if (movieCreationDTO.Poster != null)
             {
                 movie.Poster = await _fileStorageService.SaveFile(container, movieCreationDTO.Poster);
             }
@@ -41,6 +42,39 @@ namespace MovieApi.Controllers
             await _context.SaveChangesAsync();
             return NoContent();
         }
+
+        [HttpGet("PostGet")]
+        public async Task<ActionResult<MoviePostGetDTO>> PostGet()
+        {
+            var movieTheaters = await _context.MovieTheaters.ToListAsync();
+            var genres = await _context.Genres.ToListAsync();
+
+            var movieTheatersDTO = _mapper.Map<List<MovieTheaterDTO>>(movieTheaters);
+            var genresDTO = _mapper.Map<List<GenreDTO>>(genres);
+
+            return new MoviePostGetDTO() { Genres = genresDTO, MovieTheaters = movieTheatersDTO };
+
+        }
+
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<MovieDTO>> Get(int Id)
+        {
+            var movie = await _context.Movies
+                .Include(x => x.MoviesGenres).ThenInclude(x => x.Genre)
+                .Include(x => x.MovieTheatersMovies).ThenInclude(x => x.MovieTheater)
+                .Include(x => x.MoviesActors).ThenInclude(x => x.Actor)
+                .FirstOrDefaultAsync(x => x.Id == Id);
+
+            if (movie == null)
+            {
+                return NotFound();
+            }
+
+            var dto = _mapper.Map<MovieDTO>(movie);
+            dto.Actors = dto.Actors.OrderBy(x => x.Order).ToList();
+            return dto;
+        }
+
 
 
         private void AnnotateActorsOrder(Movie movie)

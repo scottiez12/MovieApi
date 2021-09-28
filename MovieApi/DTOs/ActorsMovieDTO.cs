@@ -5,19 +5,16 @@ using System.Threading.Tasks;
 
 namespace MovieApi.DTOs
 {
-    public class ActorDTO
+    public class ActorsMovieDTO
     {
         public int Id { get; set; }
 
         public string Name { get; set; }
 
-        public DateTime DateOfBirth { get; set; }
-
-        public string Biography { get; set; }
-
         public string Picture { get; set; }
 
         public string Character { get; set; }
 
+        public int Order { get; set; }
     }
 }
