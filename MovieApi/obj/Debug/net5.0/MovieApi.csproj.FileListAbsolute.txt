@@ -66,3 +66,8 @@ D:\Workspace\Users\sziegler\Projects for Learning\DNCwithReact\MovieApi\MovieApi
 D:\Workspace\Users\sziegler\Projects for Learning\DNCwithReact\MovieApi\MovieApi\MovieApi\bin\Debug\net5.0\Azure.Storage.Common.dll
 D:\Workspace\Users\sziegler\Projects for Learning\DNCwithReact\MovieApi\MovieApi\MovieApi\bin\Debug\net5.0\Microsoft.Bcl.AsyncInterfaces.dll
 D:\Workspace\Users\sziegler\Projects for Learning\DNCwithReact\MovieApi\MovieApi\MovieApi\bin\Debug\net5.0\System.Memory.Data.dll
+D:\Workspace\Users\sziegler\Projects for Learning\DNCwithReact\MovieApi\MovieApi\MovieApi\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite.dll
+D:\Workspace\Users\sziegler\Projects for Learning\DNCwithReact\MovieApi\MovieApi\MovieApi\bin\Debug\net5.0\NetTopologySuite.dll
+D:\Workspace\Users\sziegler\Projects for Learning\DNCwithReact\MovieApi\MovieApi\MovieApi\bin\Debug\net5.0\NetTopologySuite.IO.SqlServerBytes.dll
+D:\Workspace\Users\sziegler\Projects for Learning\DNCwithReact\MovieApi\MovieApi\MovieApi\obj\Debug\net5.0\EFCoreSqlServerNetTopologySuite.cs
+D:\Workspace\Users\sziegler\Projects for Learning\DNCwithReact\MovieApi\MovieApi\MovieApi\bin\Debug\net5.0\Newtonsoft.Json.dll

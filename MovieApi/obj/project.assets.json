@@ -264,6 +264,23 @@
           "lib/netstandard2.1/Microsoft.EntityFrameworkCore.SqlServer.dll": {}
         }
       },
+      "Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite/5.0.10": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.SqlServer": "5.0.10",
+          "NetTopologySuite": "2.1.0",
+          "NetTopologySuite.IO.SqlServerBytes": "2.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.1/Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.1/Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite.dll": {}
+        },
+        "build": {
+          "build/netstandard2.1/Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite.targets": {}
+        }
+      },
       "Microsoft.EntityFrameworkCore.Tools/5.0.10": {
         "type": "package",
         "dependencies": {
@@ -541,6 +558,39 @@
             "assetType": "runtime",
             "rid": "win"
           }
+        }
+      },
+      "NetTopologySuite/2.1.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Memory": "4.5.3"
+        },
+        "compile": {
+          "lib/netstandard2.0/NetTopologySuite.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/NetTopologySuite.dll": {}
+        }
+      },
+      "NetTopologySuite.IO.SqlServerBytes/2.0.0": {
+        "type": "package",
+        "dependencies": {
+          "NetTopologySuite": "[2.0.0, 3.0.0-A)"
+        },
+        "compile": {
+          "lib/netstandard2.0/NetTopologySuite.IO.SqlServerBytes.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/NetTopologySuite.IO.SqlServerBytes.dll": {}
+        }
+      },
+      "Newtonsoft.Json/13.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
         }
       },
       "runtime.native.System/4.3.0": {
@@ -1988,6 +2038,21 @@
         "microsoft.entityframeworkcore.sqlserver.nuspec"
       ]
     },
+    "Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite/5.0.10": {
+      "sha512": "R7C4OcXbsSS+SsVneSx0VeFY8rRIcwbIbR+K7wp5MNjwoormaD0qlKcbSD1W2ikQnyT2tskNuKoxYXZzfd/BVA==",
+      "type": "package",
+      "path": "microsoft.entityframeworkcore.sqlserver.nettopologysuite/5.0.10",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "build/netstandard2.1/Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite.targets",
+        "lib/netstandard2.1/Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite.dll",
+        "lib/netstandard2.1/Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite.xml",
+        "microsoft.entityframeworkcore.sqlserver.nettopologysuite.5.0.10.nupkg.sha512",
+        "microsoft.entityframeworkcore.sqlserver.nettopologysuite.nuspec"
+      ]
+    },
     "Microsoft.EntityFrameworkCore.Tools/5.0.10": {
       "sha512": "tZyRQ01KmPIGXO/jGGG9OrxKvFUckgq65FvGmYjwDazgBXIvfX2kdxXp2nN5gIQOiSMPMpRu8RDqI+2InyBuMg==",
       "type": "package",
@@ -2477,6 +2542,60 @@
         "runtimes/win/lib/netcoreapp3.0/Microsoft.Win32.SystemEvents.xml",
         "useSharedDesignerContext.txt",
         "version.txt"
+      ]
+    },
+    "NetTopologySuite/2.1.0": {
+      "sha512": "v/eGXaJbPMy9kg6OK30mSuF0Ln6TXmWzPS8ojUMr/ecRiNpiZlEDXKq0CWIaE2Tc1uV2RZHLVPfF1QcoGs4ZYg==",
+      "type": "package",
+      "path": "nettopologysuite/2.1.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "icon.png",
+        "lib/netstandard2.0/NetTopologySuite.dll",
+        "lib/netstandard2.0/NetTopologySuite.xml",
+        "nettopologysuite.2.1.0.nupkg.sha512",
+        "nettopologysuite.nuspec"
+      ]
+    },
+    "NetTopologySuite.IO.SqlServerBytes/2.0.0": {
+      "sha512": "TuyMB0VSlRJx86UrWeQ+SGgOMudvhIL1qJJdWJw78nWsXIzKRP4ooQAhhhCCH7n8q1lvd0/NW3ByaLlHxxNSPQ==",
+      "type": "package",
+      "path": "nettopologysuite.io.sqlserverbytes/2.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard2.0/NetTopologySuite.IO.SqlServerBytes.dll",
+        "lib/netstandard2.0/NetTopologySuite.IO.SqlServerBytes.xml",
+        "nettopologysuite.io.sqlserverbytes.2.0.0.nupkg.sha512",
+        "nettopologysuite.io.sqlserverbytes.nuspec"
+      ]
+    },
+    "Newtonsoft.Json/13.0.1": {
+      "sha512": "ppPFpBcvxdsfUonNcvITKqLl3bqxWbDCZIzDWHzjpdAHRFfZe0Dw9HmA0+za13IdyrgJwpkDTDA9fHaxOrt20A==",
+      "type": "package",
+      "path": "newtonsoft.json/13.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.md",
+        "lib/net20/Newtonsoft.Json.dll",
+        "lib/net20/Newtonsoft.Json.xml",
+        "lib/net35/Newtonsoft.Json.dll",
+        "lib/net35/Newtonsoft.Json.xml",
+        "lib/net40/Newtonsoft.Json.dll",
+        "lib/net40/Newtonsoft.Json.xml",
+        "lib/net45/Newtonsoft.Json.dll",
+        "lib/net45/Newtonsoft.Json.xml",
+        "lib/netstandard1.0/Newtonsoft.Json.dll",
+        "lib/netstandard1.0/Newtonsoft.Json.xml",
+        "lib/netstandard1.3/Newtonsoft.Json.dll",
+        "lib/netstandard1.3/Newtonsoft.Json.xml",
+        "lib/netstandard2.0/Newtonsoft.Json.dll",
+        "lib/netstandard2.0/Newtonsoft.Json.xml",
+        "newtonsoft.json.13.0.1.nupkg.sha512",
+        "newtonsoft.json.nuspec",
+        "packageIcon.png"
       ]
     },
     "runtime.native.System/4.3.0": {
@@ -5940,7 +6059,9 @@
       "Azure.Storage.Blobs >= 12.10.0",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 5.0.10",
       "Microsoft.EntityFrameworkCore.SqlServer >= 5.0.10",
+      "Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite >= 5.0.10",
       "Microsoft.EntityFrameworkCore.Tools >= 5.0.10",
+      "Newtonsoft.Json >= 13.0.1",
       "Swashbuckle.AspNetCore >= 5.6.3"
     ]
   },
@@ -6003,11 +6124,19 @@
             "target": "Package",
             "version": "[5.0.10, )"
           },
+          "Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite": {
+            "target": "Package",
+            "version": "[5.0.10, )"
+          },
           "Microsoft.EntityFrameworkCore.Tools": {
             "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
             "suppressParent": "All",
             "target": "Package",
             "version": "[5.0.10, )"
+          },
+          "Newtonsoft.Json": {
+            "target": "Package",
+            "version": "[13.0.1, )"
           },
           "Swashbuckle.AspNetCore": {
             "target": "Package",
