@@ -81,16 +81,19 @@ namespace MovieApi.Controllers
             var top = 6;
             var today = DateTime.Today;
 
-            var upcomingReleases = await _context.Movies.Where(x => x.ReleaseDate > today)
+            var upcomingReleases = await _context.Movies
+                .Where(x => x.ReleaseDate > today)
                 .OrderBy(x => x.ReleaseDate)
                 .Take(top)
                 .ToListAsync();
+
 
             var inTheaters = await _context.Movies
                 .Where(x => x.InTheaters)
                 .OrderBy(x => x.ReleaseDate)
                 .Take(top)
                 .ToListAsync();
+
 
             var landingPageDTO = new LandingPageDTO();
             landingPageDTO.InTheaters = _mapper.Map<List<MovieDTO>>(inTheaters);
@@ -156,6 +159,23 @@ namespace MovieApi.Controllers
             return NoContent();
 
         }
+
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult> Delete(int Id)
+        {
+            var movie = await _context.Movies.FirstOrDefaultAsync(x => x.Id == Id);
+
+            if (movie == null)
+            {
+                return NotFound();
+            }
+
+            _context.Remove(movie);
+            await _context.SaveChangesAsync();
+            await _fileStorageService.DeleteFile(movie.Poster, container);
+            return NoContent();
+        }
+
 
         private void AnnotateActorsOrder(Movie movie)
         {
