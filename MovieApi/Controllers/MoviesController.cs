@@ -177,6 +177,43 @@ namespace MovieApi.Controllers
         }
 
 
+        [HttpGet("filter")]
+        public async Task<ActionResult<List<MovieDTO>>> Filter([FromQuery] FilterMoviesDTO filterMoviesDto)
+        {
+            var moviesQueryable = _context.Movies.AsQueryable();
+
+            if (!string.IsNullOrEmpty(filterMoviesDto.Title))
+            {
+                moviesQueryable = moviesQueryable.Where(x => x.Title.Contains(filterMoviesDto.Title));
+            }
+
+            if (filterMoviesDto.InTheaters)
+            {
+                moviesQueryable = moviesQueryable.Where(x => x.InTheaters);
+            }
+
+            if (filterMoviesDto.UpcomingReleases)
+            {
+                var today = DateTime.Today;
+                moviesQueryable = moviesQueryable.Where(x => x.ReleaseDate > today);
+            }
+
+            if (filterMoviesDto.GenreId != 0)
+            {
+                moviesQueryable = moviesQueryable
+                    .Where(x => x.MoviesGenres.Select(y => y.GenreId)
+                    .Contains(filterMoviesDto.GenreId));                    
+            }
+
+
+            await HttpContext.InsertParametersPaginationInHeader(moviesQueryable);
+
+            var movies = await moviesQueryable.OrderBy(x => x.Title).Paginate(filterMoviesDto.PaginationDTO).ToListAsync();
+
+            return _mapper.Map<List<MovieDTO>>(movies);
+
+        }
+
         private void AnnotateActorsOrder(Movie movie)
         {
             if (movie.MoviesActors != null)
