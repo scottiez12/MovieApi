@@ -46,7 +46,7 @@ namespace MovieApi
             services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
-                    sqlOptions => sqlOptions.UseNetTopologySuite());                
+                    sqlOptions => sqlOptions.UseNetTopologySuite());
             });
 
 
@@ -55,6 +55,32 @@ namespace MovieApi
                 options.Filters.Add(typeof(MyGlobalExceptionFilter));
                 options.Filters.Add(typeof(ParseBadRequest));
             }).ConfigureApiBehaviorOptions(BadRequestBehavior.Parse);
+
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(
+                            Encoding.UTF8.GetBytes(Configuration["keyJwt"])),
+                        ClockSkew = TimeSpan.Zero
+                    };
+                });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("IsAdmin", policy => policy.RequireClaim("role", "admin"));
+            });
+
 
             services.AddAutoMapper(typeof(Startup));
             services.AddSingleton(provider => new MapperConfiguration(config =>
@@ -69,7 +95,6 @@ namespace MovieApi
             services.AddScoped<IFileStorageService, AzureStorageService>();
             //services.AddScoped<IFileStorageService, InAppStorageService>();
             services.AddHttpContextAccessor();
-
             //services.AddResponseCaching();
             //services.AddSingleton<IRepository, InMemoryRepository>();
             //services.AddTransient<MyActionFilter>();
@@ -90,24 +115,7 @@ namespace MovieApi
                 });
             });
 
-            services.AddIdentity<IdentityUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = false,
-                        ValidateAudience = false,
-                        ValidateLifetime = true,
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(
-                            Encoding.UTF8.GetBytes(Configuration["keyJwt"])),
-                        ClockSkew = TimeSpan.Zero
-                    };
-                });
 
 
         }
