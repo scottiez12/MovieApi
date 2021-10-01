@@ -43,7 +43,7 @@ namespace MovieApi.Controllers
             var result = await _signInManager.PasswordSignInAsync(userCredentials.Email, userCredentials.Password, isPersistent: false, lockoutOnFailure: false);
             if (result.Succeeded)
             {
-                return BuildToken(userCredentials);
+                return await BuildToken(userCredentials);
             }
             else
             {
@@ -90,7 +90,7 @@ namespace MovieApi.Controllers
 
             if (result.Succeeded)
             {
-                return BuildToken(userCredentials);
+                return await BuildToken(userCredentials);
             }
             else
             {
@@ -102,12 +102,17 @@ namespace MovieApi.Controllers
 
 
         //THIS IS SUPER IMPORTANT.
-        private AuthenticationResponse BuildToken(UserCredentials userCredentials)
+        private async Task<AuthenticationResponse> BuildToken(UserCredentials userCredentials)
         {
             var claims = new List<Claim>()
             {
                 new Claim("email", userCredentials.Email)
             };
+
+            var user = await _userManager.FindByNameAsync(userCredentials.Email);
+            var claimsDB = await _userManager.GetClaimsAsync(user);
+
+            claims.AddRange(claimsDB);
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["keyJwt"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
